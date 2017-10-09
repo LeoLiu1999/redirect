@@ -27,6 +27,8 @@ def welcome():
 
 @app.route("/login", methods=["POST","GET"])
 def login():
+    if "username" in session:
+        return redirect(url_for("root"))
     usr_ok = False
     pwd_ok = False
     username = request.form.get("username")
@@ -46,8 +48,9 @@ def login():
 
 @app.route("/signout")
 def signout():
-    session.pop("username")
-    return redirect(url_for(""))
+    if "username" in session:
+        session.pop("username")
+    return redirect(url_for("root"))
 
 if __name__ == "__main__":
     app.debug = True
