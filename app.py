@@ -1,12 +1,15 @@
+# Shakil Rafi and Leo Liu
+# SoftDev pd7
+# HW08 -- redirect
+# 2017-10-09
+
 from flask import Flask, render_template, session, url_for, redirect, request
 import os
 
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
-'''
-hard-coded username/password
-'''
+# hard-coded username/password
 usr="TakingTheL"
 pwd="srafi1"
 
@@ -20,8 +23,8 @@ def root():
 @app.route("/welcome")
 def welcome():
     if "username" in session:
-        username=session["username"]
-        return render_template("index.html",username=username)
+        username = session["username"]
+        return render_template("index.html", username=username)
     else:
         return redirect(url_for("login"))
 
