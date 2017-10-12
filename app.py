@@ -44,7 +44,7 @@ def login():
 
 def authenticate(user, passwd):
     print "authenticating user: %s passwd: %s" % (user, passwd)
-    if user == "" and passwd == "":
+    if user == None and passwd == None:
         return False, ""
     if user == "":
         return False, "Enter your username"
