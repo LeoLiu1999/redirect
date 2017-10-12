@@ -3,7 +3,7 @@
 # HW08 -- redirect
 # 2017-10-09
 
-from flask import Flask, render_template, session, url_for, redirect, request
+from flask import Flask, render_template, session, url_for, redirect, request, flash
 import os
 
 app = Flask(__name__)
@@ -32,22 +32,29 @@ def welcome():
 def login():
     if "username" in session:
         return redirect(url_for("root"))
-    usr_ok = False
-    pwd_ok = False
     username = request.form.get("username")
     password = request.form.get("password")
-    if username == usr:
-        usr_ok = True
-    if password == pwd:
-        pwd_ok = True
-
-    if (usr_ok and pwd_ok):
+    authenticated, msg = authenticate(username, password)
+    if authenticated:
         session["username"] = username
-        return redirect(url_for("welcome"))
-    if usr_ok:
-        return render_template("login.html",error="Wrong password. Please try again.")
+        return redirect(url_for("root"))
     else:
-        return render_template("login.html",error="Wrong username. Please try again.")
+        flash(msg)
+        return render_template("login.html")
+
+def authenticate(user, passwd):
+    print "authenticating user: %s passwd: %s" % (user, passwd)
+    if user == "" and passwd == "":
+        return False, ""
+    if user == "":
+        return False, "Enter your username"
+    if passwd == "":
+        return False, "Enter your password"
+    if user != usr:
+        return False, "That user is not registered"
+    if passwd != pwd:
+        return False, "Wrong password"
+    return True, ""
 
 @app.route("/signout")
 def signout():

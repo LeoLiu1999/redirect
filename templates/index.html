@@ -1,14 +1,13 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Welcome</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+
+{% block title %}
+  Welcome
+{% endblock %}
+{% block content %}
     <h1>HELLO THERE!!!</h1>
     {{username}}
     <br><br><br><br>
     <form action = "/signout">
       <input type = "submit" value = "Sign Out">
     </form>
-  </body>
-</html>
+{% endblock %}
